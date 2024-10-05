@@ -33,19 +33,19 @@ exports.postCartController = async (req, res) => {
     const cart = req.body;
     const email = req.params.email;
 
-    // Filter to check if the product already exists in the cart for the user
-    const filter = { customer_email: email, product_id: cart.product_id };
+    // // Filter to check if the product already exists in the cart for the user
+    // const filter = { customer_email: email, product_id: cart.product_id };
 
-    // Check if the product already exists in the user's cart
-    const existingProduct = await Carts.findOne(filter);
+    // // Check if the product already exists in the user's cart
+    // const existingProduct = await Carts.findOne(filter);
 
-    if (existingProduct) {
-      // If the product already exists, return a message indicating it
-      return res.status(409).json({
-        message: "This product already exists in your cart",
-        insertedId: null,
-      });
-    }
+    // if (existingProduct) {
+    //   // If the product already exists, return a message indicating it
+    //   return res.status(409).json({
+    //     message: "This product already exists in your cart",
+    //     insertedId: null,
+    //   });
+    // }
 
     // If the product does not exist, add it to the cart
     const newCart = new Carts(cart);
