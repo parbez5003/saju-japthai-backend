@@ -62,14 +62,13 @@ exports.orderSuccess = async (req, res) => {
       district,
     } = req.body;
 
-    // let totalAmountInDollars;
-    // if (parseInt(total_amount) > 100) {
-    //   totalAmountInDollars = parseFloat(total_amount) / 100;
-    // } else {
-    //   totalAmountInDollars = parseFloat(total_amount);
-    // }
+    let totalAmountInEuros;
+    if (parseInt(total_amount) > 100) {
+      totalAmountInEuros = parseFloat(total_amount) / 100;
+    } else {
+      totalAmountInEuros = parseFloat(total_amount);
+    }
 
-    const totalAmountInEuros = (parseFloat(total_amount) / 100).toFixed(2);
 
     const newOrder = new Orders({
       customer_name,
