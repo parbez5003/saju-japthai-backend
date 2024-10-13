@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
-const Carts = require('./CartsModel').schema;
+const mongoose = require("mongoose");
+const Carts = require("./CartsModel").schema;
 
 const ordersSchema = new mongoose.Schema({
-
   customer_email: {
     type: String,
     required: true,
@@ -35,20 +34,19 @@ const ordersSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['pending', 'success', 'failed'],
+    enum: ["pending", "success", "failed"],
   },
 
+  //  data update
 
-  //  data update 
-  
   road_number: {
     type: String,
-    required: true
+    required: true,
   },
 
   address: {
     type: String,
-    required: true
+    required: true,
   },
   complement_address: {
     type: String,
@@ -56,22 +54,22 @@ const ordersSchema = new mongoose.Schema({
   },
   post_code: {
     type: Number,
-    required: true
+    required: true,
   },
-  
+
   district: {
     type: String,
-    required: true
+    required: true,
   },
 
+  // update 9-10-24
 
-
-
-
-
+  // Fields for soft deletion (archiving)
+  isArchived: { type: Boolean, default: false }, // Mark as archived
+  archivedAt: { type: Date }, // Time when archived
 
   foods: [Carts],
 });
 
-const Orders = mongoose.model('Orders', ordersSchema);
+const Orders = mongoose.model("Orders", ordersSchema);
 module.exports = Orders;
