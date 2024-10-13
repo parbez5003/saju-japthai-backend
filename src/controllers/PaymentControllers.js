@@ -46,6 +46,72 @@ exports.postOrder = async (req, res) => {
   }
 };
 
+// exports.orderSuccess = async (req, res) => {
+//   try {
+//     const {
+//       customer_name,
+//       customer_email,
+//       transactionId,
+//       total_amount,
+//       foods,
+//       status,
+//       road_number,
+//       address,
+//       complement_address,
+//       post_code,
+//       district,
+//     } = req.body;
+
+   
+//     let totalAmountInDollars;
+//     if (parseInt(total_amount) > 100) {
+      
+//       totalAmountInDollars = parseFloat(total_amount) / 100;
+//     } else {
+      
+//       totalAmountInDollars = parseFloat(total_amount);
+//     }
+
+  
+//     const newOrder = new Orders({
+//       customer_name,
+//       customer_email,
+//       transactionId,
+//       total_amount: totalAmountInDollars, 
+//       isPaid: status === "success",
+//       isDelivered: false,
+//       isOrderCancel: false,
+//       date: new Date(),
+//       status,
+//       foods,
+//       road_number,
+//       address,
+//       complement_address,
+//       post_code,
+//       district,
+//     });
+
+    
+//     await newOrder.save();
+
+    
+//     res.status(201).json({
+//       message: "Commande créée avec succès", 
+//       order: newOrder,
+//     });
+//   } catch (error) {
+//     console.error("Error creating order:", error);
+//     res.status(500).json({
+//       message: "Une erreur est survenue lors de la création de la commande", 
+//       error: error.message,
+//     });
+//   }
+// };
+
+
+
+
+
 exports.orderSuccess = async (req, res) => {
   try {
     const {
@@ -62,22 +128,15 @@ exports.orderSuccess = async (req, res) => {
       district,
     } = req.body;
 
-    // Check if the total_amount is in cents and convert it to dollars
-    let totalAmountInDollars;
-    if (parseInt(total_amount) > 100) {
-      // Assuming the amount is in cents (e.g., 9000), convert it to dollars
-      totalAmountInDollars = parseFloat(total_amount) / 100;
-    } else {
-      // If it's already in dollars, just parse it as a float
-      totalAmountInDollars = parseFloat(total_amount);
-    }
+    // Convert total_amount from cents to euros
+    const totalAmountInEuros = parseFloat(total_amount / 100).toFixed(2);
 
     // Create a new order object
     const newOrder = new Orders({
       customer_name,
       customer_email,
       transactionId,
-      total_amount: totalAmountInDollars, // Store the amount in dollars
+      total_amount: totalAmountInEuros, // Store the amount in euros
       isPaid: status === "success",
       isDelivered: false,
       isOrderCancel: false,
@@ -90,8 +149,6 @@ exports.orderSuccess = async (req, res) => {
       post_code,
       district,
     });
-
-    // console.log(newOrder);
 
     // Save the new order to the database
     await newOrder.save();
@@ -110,6 +167,8 @@ exports.orderSuccess = async (req, res) => {
   }
 };
 
+
+
 exports.getMyOrders = async (req, res) => {
   try {
     const email = req.params.email;
@@ -127,6 +186,22 @@ exports.getMyOrders = async (req, res) => {
 };
 
 //  get all orders products
+
+exports.getAllOrders = async (req, res) => {
+  try {
+    const orders = await Orders.find({});
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
+
+
 
 exports.getIsNotAllArchiveOrders = async (req, res) => {
   try {

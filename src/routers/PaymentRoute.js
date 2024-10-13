@@ -12,7 +12,10 @@ PaymentRouter.post('/order', verifyToken, PaymentControllers.postOrder);
 PaymentRouter.post('/orderSuccess', verifyToken, PaymentControllers.orderSuccess);
 PaymentRouter.get('/myorders/:email', verifyToken, PaymentControllers.getMyOrders)
 PaymentRouter.get('/isNotAllOrders', verifyToken, verifyAdmin, PaymentControllers.getIsNotAllArchiveOrders)
+
 PaymentRouter.get('/isAllArchivedOrders', verifyToken, verifyAdmin, PaymentControllers.getIsAllArchiveOrders)
+
+PaymentRouter.get('/getAllOrders', verifyToken, verifyAdmin, PaymentControllers.getAllOrders)
 
 // Routes for archiving orders
 PaymentRouter.post('/archiveOrder/:id', verifyToken, verifyAdmin, PaymentControllers.archiveOrder); // For single archive

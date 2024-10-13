@@ -32,7 +32,13 @@ const CartsSchema = new mongoose.Schema({
   },
   product_image: [String],
   stock_limit: Number,
-  addiotional_food:String,
+
+  additional_food: {
+    type: Map,
+    of: String,
+    default: {},
+  },
+
   name: String,
 });
 
